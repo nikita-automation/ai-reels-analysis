@@ -1,0 +1,1663 @@
+{
+  "name": "Reels_analis_v2025.1",
+  "nodes": [
+    {
+      "parameters": {
+        "resource": "Datasets",
+        "operation": "Get items",
+        "datasetId": "={{ $json.body.resource.defaultDatasetId }}",
+        "limit": null,
+        "fields": "",
+        "requestOptions": {}
+      },
+      "id": "e87f4130-1589-4c95-bc34-3af20450cc2a",
+      "name": "Apify",
+      "type": "n8n-nodes-apify.apify",
+      "typeVersion": 1,
+      "position": [
+        -32,
+        496
+      ],
+      "credentials": {
+        "apifyApi": {
+          "id": "Rx3SNNqpL428HQVg",
+          "name": "Apify_MyBlog"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "base": {
+          "__rl": true,
+          "value": "appr76h58WgpYb4dU",
+          "mode": "list",
+          "cachedResultName": "Анализ Рилс My Blog ",
+          "cachedResultUrl": "https://airtable.com/appr76h58WgpYb4dU"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblmx2qHWUmQg8XRp",
+          "mode": "list",
+          "cachedResultName": "Пользователи",
+          "cachedResultUrl": "https://airtable.com/appr76h58WgpYb4dU/tblmx2qHWUmQg8XRp"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Имя": "={{ $('Apify').item.json.data[0].fullName }}",
+            "Username": "={{ $('Apify').item.json.data[0].username }}",
+            "Фото профиля": "={{ $json.fields['Фото профиля'] }}",
+            "Описание профиля": "={{ $('Apify').item.json.data[0].biography }}",
+            "Ссылка на профиль": "={{ $('Apify').item.json.data[0].url }}",
+            "Кол-во подписчиков": "={{ $('Apify').item.json.data[0].followersCount }}",
+            "Подписан": "={{ $('Apify').item.json.data[0].followsCount }}",
+            "Видео": "={{ $('Apify').item.json.data[0].postsCount }}"
+          },
+          "matchingColumns": [
+            "Username"
+          ],
+          "schema": [
+            {
+              "id": "Имя",
+              "displayName": "Имя",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Username",
+              "displayName": "Username",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Фото профиля",
+              "displayName": "Фото профиля",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Описание профиля",
+              "displayName": "Описание профиля",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Ссылка на профиль",
+              "displayName": "Ссылка на профиль",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Кол-во подписчиков",
+              "displayName": "Кол-во подписчиков",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Подписан",
+              "displayName": "Подписан",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Видео",
+              "displayName": "Видео",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "typecast": true
+        }
+      },
+      "id": "3aab8dde-6768-4320-9a7b-07093790fd39",
+      "name": "Airtable",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        416,
+        496
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "OHTzzwlFRN0g1z2y",
+          "name": "Airtable_MyBlog"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => {\n  return {\n    json: {\n      \"fields\": {\n        \"Фото профиля\": [\n          {\n            \"url\": item.json.data[0].profilePicUrlHD\n          }\n        ]\n      }\n    }\n  };\n});\n"
+      },
+      "id": "c66bc692-5d52-4dfe-8321-e01adc3687f4",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        192,
+        496
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "95506919-87e5-4dd9-8283-e8e60536eb8a",
+              "leftValue": "={{ $json.body.eventData.actorTaskId }}",
+              "rightValue": "={{ $json.body.eventData.actorTaskId }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "8088b56d-7875-449b-ae37-ce9ab582aa28",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -256,
+        496
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "95506919-87e5-4dd9-8283-e8e60536eb8a",
+              "leftValue": "={{ $json.body.eventData.actorTaskId }}",
+              "rightValue": "ErwofM6IyEraCD6fJ",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "29eb2d57-f8d3-418b-b492-9a269a85edf5",
+      "name": "If1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -32,
+        944
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Запуск анализа пользователя \nЗапускается автоматически из Airtable, скачивает данные юзера из Apify\n",
+        "height": 463,
+        "width": 1529
+      },
+      "id": "be360ac7-4a45-469c-be55-3837638c8b65",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -640,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => {\n  const videoUrl = item.json.videoUrl;\n  const coverUrl = item.json.displayUrl;\n\n  return {\n    json: {\n      ownerUsername: item.json.ownerUsername,\n      caption: item.json.caption,\n      type: item.json.type,\n      videoPlayCount: item.json.videoPlayCount,\n      url: item.json.url,\n      shortCode: item.json.shortCode,\n\n      fields: {\n        Covert: coverUrl\n          ? [{ url: coverUrl }]\n          : [],\n\n        Media: videoUrl\n          ? [{\n              url: videoUrl,\n              filename: `${item.json.shortCode || item.json.id || Date.now()}.mp4`\n            }]\n          : []\n      }\n    }\n  };\n});"
+      },
+      "id": "61e009ac-bd96-45d6-b9db-c390b4f13645",
+      "name": "Code2",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        640,
+        944
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "data",
+        "options": {}
+      },
+      "id": "d7068cb2-a223-488e-9cd3-0f230d74ddb3",
+      "name": "Split Out",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        416,
+        944
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Запуск анализа РИЛС\n",
+        "height": 638.1106002293172,
+        "width": 1862.8297135720964
+      },
+      "id": "fe52f259-ba18-499e-829c-e203ed1ef354",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -272,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 11,
+              "triggerAtMinute": 5
+            }
+          ]
+        }
+      },
+      "id": "973b2469-4c97-4669-8f4c-af621e97fcd0",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -256,
+        1248
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "app1NgfoIUtpY3q3z",
+          "mode": "list",
+          "cachedResultName": "Анализ рилс Дрозд",
+          "cachedResultUrl": "https://airtable.com/app1NgfoIUtpY3q3z"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblFGppS2O6nf35NC",
+          "mode": "list",
+          "cachedResultName": "Пользователи",
+          "cachedResultUrl": "https://airtable.com/app1NgfoIUtpY3q3z/tblFGppS2O6nf35NC"
+        },
+        "options": {}
+      },
+      "id": "1436ac8b-9768-41f2-85c7-c802790c464e",
+      "name": "Airtable3",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        -32,
+        1248
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "OHTzzwlFRN0g1z2y",
+          "name": "Airtable_MyBlog"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Actor tasks",
+        "operation": "Run task",
+        "actorTaskId": {
+          "__rl": true,
+          "value": "FFkXx3CA8dREGHa46",
+          "mode": "list",
+          "cachedResultName": "instagram-scraper-drozd",
+          "cachedResultUrl": "https://console.apify.com/actors/undefined/input"
+        },
+        "timeout": 120,
+        "maxItems": 10,
+        "build": "",
+        "waitForFinish": 15,
+        "webhooks": "",
+        "useCustomBody": true,
+        "customBody": "={\n    \"addParentData\": false,\n    \"directUrls\": [\n        \"{{ $json[\"User_url\"] }}\"\n    ],\n    \"enhanceUserSearchWithFacebookPage\": false,\n    \"isUserReelFeedURL\": false,\n    \"isUserTaggedFeedURL\": false,\n    \"resultsLimit\": 10,\n    \"resultsType\": \"stories\",\n    \"searchLimit\": 10,\n    \"searchType\": \"hashtag\",\n    \"onlyPostsNewerThan\": \"{{ $json[\"Дата начала\"] }}\"\n}\n",
+        "requestOptions": {}
+      },
+      "id": "3e5791a1-2757-4fd6-827d-c866e886a841",
+      "name": "Apify4",
+      "type": "n8n-nodes-apify.apify",
+      "typeVersion": 1,
+      "position": [
+        416,
+        1168
+      ],
+      "credentials": {
+        "apifyApi": {
+          "id": "Rx3SNNqpL428HQVg",
+          "name": "Apify_MyBlog"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Запуск анализа РИЛС\nВсе пользователи раз в 3 дня в 00:00\n",
+        "height": 538,
+        "width": 1863
+      },
+      "id": "89eaf681-159f-4872-a273-7120b054511f",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -688,
+        864
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "Actor tasks",
+        "operation": "Run task",
+        "actorTaskId": {
+          "__rl": true,
+          "value": "Y2DQuJrmyRwCtcySl",
+          "mode": "list",
+          "cachedResultName": "instagram-profile-drozd",
+          "cachedResultUrl": "https://console.apify.com/actors/undefined/input"
+        },
+        "timeout": 240,
+        "maxItems": 30,
+        "build": "",
+        "waitForFinish": 120,
+        "webhooks": "",
+        "useCustomBody": true,
+        "customBody": "={\n    \"usernames\": [\n        \"{{ $json[\"Username\"] }}\"\n    ]\n} ",
+        "requestOptions": {}
+      },
+      "id": "7fadd309-4b4d-45bc-a3e2-c68a74ee8667",
+      "name": "Apify5",
+      "type": "n8n-nodes-apify.apify",
+      "typeVersion": 1,
+      "position": [
+        192,
+        1472
+      ],
+      "credentials": {
+        "apifyApi": {
+          "id": "Rx3SNNqpL428HQVg",
+          "name": "Apify_MyBlog"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 23
+            }
+          ]
+        }
+      },
+      "id": "42678ca1-652f-42f7-8c7e-876f5365b1ea",
+      "name": "Schedule Trigger1",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -256,
+        1472
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "app1NgfoIUtpY3q3z",
+          "mode": "list",
+          "cachedResultName": "Анализ рилс Дрозд",
+          "cachedResultUrl": "https://airtable.com/app1NgfoIUtpY3q3z"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblFGppS2O6nf35NC",
+          "mode": "list",
+          "cachedResultName": "Пользователи",
+          "cachedResultUrl": "https://airtable.com/app1NgfoIUtpY3q3z/tblFGppS2O6nf35NC"
+        },
+        "options": {}
+      },
+      "id": "297f30f5-98ff-4aa1-a083-9bc819e03989",
+      "name": "Airtable4",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        -32,
+        1472
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "OHTzzwlFRN0g1z2y",
+          "name": "Airtable_MyBlog"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Запуск анализа конкурентов\nВсе пользователи раз в 3 дня в 23:00\n",
+        "height": 590.1256248105968,
+        "width": 1862.8297135720964
+      },
+      "id": "20450dc3-89ca-4997-bc46-66b14f60b844",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -912,
+        1264
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "id": "e6b88bd2-2e03-4bff-8243-740635a29c27",
+      "name": "Schedule Trigger2",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -256,
+        1696
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "app1NgfoIUtpY3q3z",
+          "mode": "list",
+          "cachedResultName": "Анализ рилс Дрозд",
+          "cachedResultUrl": "https://airtable.com/app1NgfoIUtpY3q3z"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblFGppS2O6nf35NC",
+          "mode": "list",
+          "cachedResultName": "Пользователи",
+          "cachedResultUrl": "https://airtable.com/app1NgfoIUtpY3q3z/tblFGppS2O6nf35NC"
+        },
+        "options": {}
+      },
+      "id": "9aa47b32-c46f-4883-aa13-fd8cf9bd7bd7",
+      "name": "Airtable5",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        -32,
+        1696
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "OHTzzwlFRN0g1z2y",
+          "name": "Airtable_MyBlog"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => {\n  return {\n    json: {\n      \"fields\": {\n        \"Пользователи\": [\n          {\n            \"id\": item.json.id\n          }\n        ]\n      }\n    }\n  };\n});\n"
+      },
+      "id": "fc3792cf-2626-44a5-a894-0140958b50c6",
+      "name": "Code1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1088,
+        944
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appr76h58WgpYb4dU",
+          "mode": "list",
+          "cachedResultName": "Анализ Рилс My Blog",
+          "cachedResultUrl": "https://airtable.com/appr76h58WgpYb4dU"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblmx2qHWUmQg8XRp",
+          "mode": "list",
+          "cachedResultName": "Пользователи",
+          "cachedResultUrl": "https://airtable.com/appr76h58WgpYb4dU/tblmx2qHWUmQg8XRp"
+        },
+        "filterByFormula": "==LOWER({Username}) = LOWER(\"{{ $json.ownerUsername }}\")",
+        "options": {}
+      },
+      "id": "556079da-5d3b-4b74-bc40-2de5da1a458d",
+      "name": "Airtable2",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        864,
+        944
+      ],
+      "alwaysOutputData": true,
+      "executeOnce": false,
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "OHTzzwlFRN0g1z2y",
+          "name": "Airtable_MyBlog"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "base": {
+          "__rl": true,
+          "value": "appr76h58WgpYb4dU",
+          "mode": "list",
+          "cachedResultName": "Анализ Рилс My Blog ",
+          "cachedResultUrl": "https://airtable.com/appr76h58WgpYb4dU"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblYXMGyYosr2oMVR",
+          "mode": "list",
+          "cachedResultName": "Видео",
+          "cachedResultUrl": "https://airtable.com/appr76h58WgpYb4dU/tblYXMGyYosr2oMVR"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Media_URL": "={{ $('Split Out').item.json.url || $('Split Out').item.json.shortCode || $('Split Out').item.json.videoUrl }}",
+            "Пользователи": "={{ $json.fields['Пользователи'].map(item => item.id) }}",
+            "Media": "={{ $('Code2').item.json.fields.Media.filter(item => item.url) }}",
+            "Covert": "={{ $('Code2').item.json.fields.Covert }}",
+            "Описание к видео": "={{ $('Split Out').item.json.caption }}",
+            "просмотров": "={{ $('Split Out').item.json.videoPlayCount }}"
+          },
+          "matchingColumns": [
+            "Media_URL"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "RecordID_video",
+              "displayName": "RecordID_video",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Media_URL",
+              "displayName": "Media_URL",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Пользователи",
+              "displayName": "Пользователи",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Media",
+              "displayName": "Media",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Covert",
+              "displayName": "Covert",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Описание к видео",
+              "displayName": "Описание к видео",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "просмотров",
+              "displayName": "просмотров",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Подписчиков",
+              "displayName": "Подписчиков",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Вирусность",
+              "displayName": "Вирусность",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Запуск Анализа",
+              "displayName": "Запуск Анализа",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Сценарий новый",
+              "displayName": "Сценарий новый",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "сценарий оригинальный ",
+              "displayName": "сценарий оригинальный ",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "typecast": false
+        }
+      },
+      "id": "85ddd2ea-8012-47f5-a20d-c7810bb909cc",
+      "name": "Airtable1",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        1312,
+        944
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "OHTzzwlFRN0g1z2y",
+          "name": "Airtable_MyBlog"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Datasets",
+        "operation": "Get items",
+        "datasetId": "={{ $json.body.resource.defaultDatasetId }}",
+        "limit": null,
+        "fields": "",
+        "requestOptions": {}
+      },
+      "id": "c2354f06-e9b8-4be3-be69-8cbc0d27a3b2",
+      "name": "Apify3",
+      "type": "n8n-nodes-apify.apify",
+      "typeVersion": 1,
+      "position": [
+        192,
+        944
+      ],
+      "credentials": {
+        "apifyApi": {
+          "id": "Rx3SNNqpL428HQVg",
+          "name": "Apify_MyBlog"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "get_reels_apify",
+        "options": {}
+      },
+      "id": "8cdbf7e5-c54d-49a8-8469-083c5ebe0238",
+      "name": "Webhook3",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -256,
+        944
+      ],
+      "webhookId": "f0d4bd3e-2675-4846-ba5e-f2d82db508f3"
+    },
+    {
+      "parameters": {
+        "batchSize": 3,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        192,
+        1248
+      ],
+      "id": "4b64f9c7-4561-45bc-8bc9-c74e9a80f23a",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        640,
+        1248
+      ],
+      "id": "763b05d5-451d-41b7-92e2-b8705dd4c9fa",
+      "name": "Wait",
+      "webhookId": "a1a77337-c66a-4933-ad4f-d55ceb901d49"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "app1NgfoIUtpY3q3z",
+          "mode": "list",
+          "cachedResultName": "Анализ рилс Дрозд",
+          "cachedResultUrl": "https://airtable.com/app1NgfoIUtpY3q3z"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl0EbkIfnxCWvzpw",
+          "mode": "list",
+          "cachedResultName": "Анализ конкурентов",
+          "cachedResultUrl": "https://airtable.com/app1NgfoIUtpY3q3z/tbl0EbkIfnxCWvzpw"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Username": "={{ $json.Username }}",
+            "Никнейм": "={{ $json['Никнейм'] }}",
+            "Подписчиков": "={{ $json['Подписчиков'] }}",
+            "Всего видео": "={{ $json['Всего видео'] }}",
+            "Подписан": 0
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Username",
+              "displayName": "Username",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Никнейм",
+              "displayName": "Никнейм",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "User_url",
+              "displayName": "User_url",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Подписчиков",
+              "displayName": "Подписчиков",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Подписан",
+              "displayName": "Подписан",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Всего видео",
+              "displayName": "Всего видео",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Видео",
+              "displayName": "Видео",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Дата начала",
+              "displayName": "Дата начала",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Record ID",
+              "displayName": "Record ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        192,
+        1696
+      ],
+      "id": "d7f279a5-1b86-4864-b67d-6d1dacb8567d",
+      "name": "Airtable6",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "OHTzzwlFRN0g1z2y",
+          "name": "Airtable_MyBlog"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json['Media'][0].url }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        192,
+        2144
+      ],
+      "id": "ce16612a-87bf-43a2-b93a-8e50be1cb5b4",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -32,
+        2592
+      ],
+      "id": "fed4560b-c72b-4a60-a8df-6ebf35f4f6e9",
+      "name": "OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "iNXjf79K3l0KIWBl",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "=/usr/bin/ffmpeg -i /tmp/fink/{{ $('Webhook4').item.json.query.recordId }}.mp4 -vn -acodec copy /tmp/fink/out_{{ $('Webhook4').item.json.query.recordId }}.m4a\n\n "
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        -256,
+        2368
+      ],
+      "id": "fafad424-3779-4ef9-b0c0-df014c68bad7",
+      "name": "Execute Command"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "=/tmp/fink/{{ $json.id }}.mp4",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        416,
+        2144
+      ],
+      "id": "e40526ec-b1c5-49ba-99b9-59d1c749c70d",
+      "name": "Read/Write Files from Disk"
+    },
+    {
+      "parameters": {
+        "fileSelector": "=/tmp/fink/out_{{ $('Airtable7').item.json.id }}.m4a",
+        "options": {
+          "dataPropertyName": "data"
+        }
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        -256,
+        2592
+      ],
+      "id": "ded44ca1-f4a4-4413-9886-40ac919875f6",
+      "name": "Read/Write Files from Disk1",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini-2024-07-18",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI-2024-07-18"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=\nYou are tasked with remaking a viral video script. Follow these steps carefully:\n\n1. First, review the original viral script\n\"{{ $json.text }}\"\n\n2. Analyze the hook and virality:\n   a. Identify the hook used in the original script.\n \n\n3. Create a remake of the script:\n   a. Modify the script, keeping similar meaning. Please keep hook same as it was.\n   b. adapt the new script to be used in eleven labs for voice creation\n\n4. Generate 6 (six) relevant hashtags for the topic.\n\n5. Write a caption for the remade script, incorporating emojis to enhance engagement.\n\n6. Compile your analysis and remake into a JSON format with the following structure:\n   {\n     \"hook\": \"Identified hook from the original script\",\n     \"remake\": \"Your remade script\",\n     \"hashtags\": [\"#hashtag1\", \"#hashtag2\", \"#hashtag3\", \"#hashtag4\", \"#hashtag5\", \"#hashtag6\"],\n     \"caption\": \"Your caption with emojis\"\n   }\n\nEnsure that all elements of the JSON are in Russian\n\n\n"
+            }
+          ]
+        },
+        "simplify": false,
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        192,
+        2592
+      ],
+      "id": "43f8508b-d190-4e4b-ba60-63ecb30ce808",
+      "name": "OpenAI1",
+      "credentials": {
+        "openAiApi": {
+          "id": "iNXjf79K3l0KIWBl",
+          "name": "OpenAi account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "command": "=rm /tmp/fink/{{ $json.id }}.mp4\nrm /tmp/fink/out_{{ $json.id }}.m4a\n "
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        -256,
+        2816
+      ],
+      "id": "cbc9f910-bcd4-45a6-b0dd-4464799bc435",
+      "name": "Execute Command2"
+    },
+    {
+      "parameters": {
+        "command": "=rm -f /tmp/fink/*\n "
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        -256,
+        1920
+      ],
+      "id": "a383355e-6be7-4c63-8568-f70d5f2950fb",
+      "name": "Execute Command3"
+    },
+    {
+      "parameters": {
+        "base": {
+          "__rl": true,
+          "value": "appr76h58WgpYb4dU",
+          "mode": "list",
+          "cachedResultName": "Анализ Рилс My Blog",
+          "cachedResultUrl": "https://airtable.com/appr76h58WgpYb4dU"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblYXMGyYosr2oMVR",
+          "mode": "list",
+          "cachedResultName": "Видео",
+          "cachedResultUrl": "https://airtable.com/appr76h58WgpYb4dU/tblYXMGyYosr2oMVR"
+        },
+        "id": "={{ $json.query.recordId }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        -32,
+        2144
+      ],
+      "id": "dbaea805-73b0-43b2-8e70-813328d59702",
+      "name": "Airtable7",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "OHTzzwlFRN0g1z2y",
+          "name": "Airtable_MyBlog"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appr76h58WgpYb4dU",
+          "mode": "list",
+          "cachedResultName": "Анализ Рилс My Blog",
+          "cachedResultUrl": "https://airtable.com/appr76h58WgpYb4dU"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblYXMGyYosr2oMVR",
+          "mode": "list",
+          "cachedResultName": "Видео",
+          "cachedResultUrl": "https://airtable.com/appr76h58WgpYb4dU/tblYXMGyYosr2oMVR"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "сценарий оригинальный": "={{ $('OpenAI').item.json.text }}",
+            "Сценарий новый": "={{ $json.choices[0].message.content.remake }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "сценарий оригинальный",
+              "displayName": "сценарий оригинальный",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Сценарий новый",
+              "displayName": "Сценарий новый",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        544,
+        2592
+      ],
+      "id": "b986c13e-30ce-47fd-8224-84ebb8e35281",
+      "name": "Airtable8",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "OHTzzwlFRN0g1z2y",
+          "name": "Airtable_MyBlog"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "path": "fink-trans",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -256,
+        2144
+      ],
+      "id": "11d094f8-005f-4f23-8c65-22cd2bf36edf",
+      "name": "Webhook4",
+      "webhookId": "b80b9323-bbff-43b6-bd85-9759b527293c"
+    },
+    {
+      "parameters": {
+        "content": "## Запуск транскрибации рилс\n\n",
+        "height": 1170,
+        "width": 1343
+      },
+      "id": "22520619-384b-475d-a2bc-d842202301d4",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -480,
+        1808
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "get_info_from_apfy",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -512,
+        496
+      ],
+      "id": "6f472ebb-a347-46d1-80f4-35ebe63aaf6e",
+      "name": "Webhook",
+      "webhookId": "f5eda9ca-e6dd-4825-8b9f-b468ac6d6690"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        576,
+        1472
+      ],
+      "typeVersion": 1,
+      "id": "661acede-0edb-47a0-9fe4-d3991120843c",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        576,
+        1472
+      ],
+      "typeVersion": 1,
+      "id": "6b99ad89-d715-409e-8950-133784d29611",
+      "name": "Sticky Note6"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Apify": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Apify",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "Airtable2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Airtable3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable3": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Airtable4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable4": {
+      "main": [
+        [
+          {
+            "node": "Apify5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger2": {
+      "main": [
+        [
+          {
+            "node": "Airtable5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable5": {
+      "main": [
+        [
+          {
+            "node": "Airtable6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Airtable1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable2": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Apify3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apify3": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook3": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Apify4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apify4": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read/Write Files from Disk1": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "OpenAI1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI1": {
+      "main": [
+        [
+          {
+            "node": "Airtable8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable7": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook4": {
+      "main": [
+        [
+          {
+            "node": "Airtable7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "07747806-e5b7-4f5b-9ec6-bd8b3cc4d6e6",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f7f72cf14071ce643170c4bacd7353b09ae72ed4c079d5b6cee6f1d2a60e6d0a"
+  },
+  "id": "CC175xkhW0p4qoqR",
+  "tags": []
+}
